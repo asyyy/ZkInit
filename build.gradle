@@ -1,0 +1,59 @@
+apply plugin: 'war'
+apply from: 'gretty.plugin'
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+//	maven {
+//	credentials { /*e.g. defined in ~/.gradle/gradle.properties*/
+//		username mavenUser
+//		password mavenPassword
+//	}
+//		url "https://maven.zkoss.org/repo/zk/ee" //ZK-EE repo requires login
+//	}
+	maven { url "https://mavensync.zkoss.org/maven2" }
+	maven { url "https://mavensync.zkoss.org/eval" }
+	maven { url "https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/" } //for jasper reports
+	mavenCentral()
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+sourceSets {
+	jettyRunner {
+		runtimeClasspath += sourceSets.main.runtimeClasspath
+	}
+}
+
+// In this section you declare the dependencies for your production and test code
+dependencies {
+	implementation "org.zkoss.zk:zk:${zkVersion}"
+	implementation "org.zkoss.zk:zkbind:${zkVersion}"
+	implementation "org.zkoss.zk:zkex:${zkVersion}"    /*ZK PE*/
+	implementation "org.zkoss.zk:zkmax:${zkVersion}"   /*ZK EE*/
+	implementation "org.zkoss.zk:zuti:${zkVersion}"    /*optional enable for shadow elements support */
+//	implementation "org.zkoss.zk:zhtml:${zkVersion}"   /*optional enable for xhtml component support */
+//	implementation "org.zkoss.zk:zkplus:${zkVersion}"  /*optional enable for 3rd party framework integration support */
+//	implementation "org.zkoss.zk:za11y:${zkVersion}"   /*optional enable for accessibility features */
+	implementation group: 'org.json', name: 'json', version: '20201115'
+	implementation "commons-io:commons-io:${commonsIoVersion}"
+
+	runtimeOnly "org.slf4j:slf4j-jdk14:1.7.28"
+
+	testImplementation "org.zkoss.zats:zats-mimic-ext7:${zatsVersion}"
+
+	testImplementation "junit:junit:${junitVersion}"
+
+	jettyRunnerRuntimeOnly "org.eclipse.jetty:jetty-runner:${jettyVersion}"
+	jettyRunnerRuntimeOnly "javax.websocket:javax.websocket-api:${websocketApiVersion}"
+	jettyRunnerRuntimeOnly "org.eclipse.jetty.websocket:javax-websocket-server-impl:${jettyVersion}"
+}
+
+//launch Jetty using jetty-runner
+task startJettyRunner(type: JavaExec) {
+	classpath = sourceSets.jettyRunner.runtimeClasspath
+	main 'org.eclipse.jetty.runner.Runner'
+	args '--path', "/${rootProject.name}", 'src/main/webapp'
+//	for windows in case of problems with resource file locking, while running
+//	args '--path', "/${rootProject.name}", 'jetty-dev-context.xml'
+}

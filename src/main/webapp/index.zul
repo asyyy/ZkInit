@@ -1,0 +1,22 @@
+<?page title="Auto Generated index.zul" ?>
+<window viewModel="@id('vm') @init('data.TableViewModel')" title="@load(vm.title)" border="normal">
+ <style src="/widgets/grid/data_filter/style.css" />
+
+	<grid model="@load(vm.listModel)" height="400px">
+        <columns menupopup="auto">
+            <column width="25%" sort="auto">Artiste</column>
+            <column width="25%" sort="auto">Pays</column>
+            <column width="25%" sort="auto">Ville</column>
+            <column width="25%" sort="auto">Annee</column>
+        </columns>
+        <template name="model">
+            <row>
+                <label value="@load(each.artiste)"/>
+                <label value="@load(each.pays)" />
+                <label value="@load(each.ville)" />
+                <label value="@load(each.annee)" />
+            </row>
+        </template>
+    </grid>
+
+</window>
