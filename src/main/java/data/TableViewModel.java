@@ -2,6 +2,8 @@ package data;
 
 
 
+import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.json.JSONArray;
 import org.zkoss.json.parser.JSONParser;
 import org.zkoss.zul.ListModel;
@@ -12,12 +14,17 @@ import java.io.IOException;
 
 
 public class TableViewModel {
-    public JSONArray bddArray;
+
+    private static final String footerMessage = "A Total of %d trucs Items";
     public String title = "Liste des trucs";
     private Table table;
+    private TableFilter tableFilter = new TableFilter();
 
     public TableViewModel(){
         this.table = new Table();
+    }
+    public TableFilter getTableFilter(){
+        return tableFilter;
     }
 
     public String getTitle() {
@@ -34,6 +41,16 @@ public class TableViewModel {
 
     public static void main(String[] args) {
         TableViewModel d = new TableViewModel();
+    }
+
+    public String getFooter() {
+        return String.format(footerMessage, table.getTable().size());
+    }
+
+    @Command
+    @NotifyChange({"foodModel", "footer"})
+    public void changeFilter() {
+        table.setTable(); = FoodData.getFilterFoods(foodFilter);
     }
 
 }

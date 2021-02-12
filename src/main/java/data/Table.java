@@ -7,8 +7,6 @@ import org.zkoss.json.parser.JSONParser;
 
 
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +76,9 @@ public class Table {
     }
     public static void main(String[] args) {
         Table t = new Table();
-        //t.fillOneLine();
         t.affiche();
     }
+
+
+
 }
