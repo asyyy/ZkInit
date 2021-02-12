@@ -46,11 +46,11 @@ public class TableViewModel {
     public String getFooter() {
         return String.format(footerMessage, table.getTable().size());
     }
-
+    /*
     @Command
     @NotifyChange({"foodModel", "footer"})
     public void changeFilter() {
-        table.setTable(); = FoodData.getFilterFoods(foodFilter);
-    }
+        table.set = FoodData.getFilterFoods(foodFilter);
+    }*/
 
 }
