@@ -11,46 +11,78 @@ import org.zkoss.zul.ListModelList;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 
 
 public class TableViewModel {
 
     private static final String footerMessage = "A Total of %d trucs Items";
     public String title = "Liste des trucs";
-    private Table table;
+    /*private Table table= new Table();*/
     private TableFilter tableFilter = new TableFilter();
+    private List<TableLine> currentTable = Table.getTable();
 
+    /*
     public TableViewModel(){
-        this.table = new Table();
-    }
+        currentTable = table.getTable();
+    }*/
+
+    /**
+     * Retourne l'objet servant de filtre pour la vue
+     * @return TableFilter
+     */
     public TableFilter getTableFilter(){
         return tableFilter;
     }
 
+    /**
+     * getter de title
+     * @return
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Setter de title
+     * @param title
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public ListModel<TableLine> getListModel(){
-        return new ListModelList<TableLine>(table.getTable());
+    /**
+     * Rend le tablo au Grid
+     * @return ListModel
+     */
+    public ListModel<TableLine> getTableModel(){
+        return new ListModelList<>(currentTable);
     }
 
-    public static void main(String[] args) {
-        TableViewModel d = new TableViewModel();
-    }
-
+    /**
+     * Modifie le message de taille total du tableau
+     * @return
+     */
     public String getFooter() {
-        return String.format(footerMessage, table.getTable().size());
+        return String.format(footerMessage, currentTable.size());
     }
-    /*
-    @Command
-    @NotifyChange({"foodModel", "footer"})
-    public void changeFilter() {
-        table.set = FoodData.getFilterFoods(foodFilter);
-    }*/
 
+    /**
+     * Affiche un joli tablo
+     */
+    public void affiche(){
+        for(TableLine l : this.currentTable){
+            System.out.println(l.getArtiste());
+            System.out.println(l.getAnnee());
+            System.out.println(l.getPays());
+            System.out.println(l.getVille());
+        }
+    }
+
+    @Command
+    @NotifyChange({"tableModel", "footer"})
+    public void changeFilter() {
+        currentTable = Table.getFilterTableLine(tableFilter);
+        affiche();
+    }
 }

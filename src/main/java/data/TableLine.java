@@ -1,6 +1,6 @@
 package data;
 
-public class TableLine implements Comparable<TableLine>{
+public class TableLine{
 
     public String artiste;
     public String pays;
@@ -43,10 +43,5 @@ public class TableLine implements Comparable<TableLine>{
     }
     public void setAnnee(String annee) {
         this.annee = annee;
-    }
-
-    @Override
-    public int compareTo(TableLine o) {
-        return this.compareTo(o);
     }
 }

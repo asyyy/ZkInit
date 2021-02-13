@@ -7,19 +7,37 @@ import org.zkoss.json.parser.JSONParser;
 
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Table {
-    private List<TableLine> table;
-    private JSONArray bddArray;
+    private static List<TableLine> table;
+    //private static JSONArray bddArray;
 
-    public Table(){
-        constructData();
-        this.table = new ArrayList<>();
-        fillAll();
+
+
+    static {
+        String name = "./bdd.json";
+
+        JSONParser bddParse = new JSONParser();
+        table = new ArrayList<>();
+        try{
+            JSONArray bddArray = (JSONArray) bddParse.parse(new FileReader(name,null));
+
+            fillAll(bddArray);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
-    public void constructData(){
+
+
+
+    /*
+    private void constructData(){
         String name = "./bdd.json";
 
         JSONParser bddParse = new JSONParser();
@@ -29,14 +47,14 @@ public class Table {
             e.printStackTrace();
         }
 
-    }
-    public void fillAll(){
+    }*/
+    public static void fillAll(JSONArray bddArray){
         for(int i = 0;i< bddArray.size();i++){
-            fillOneLine(i);
+            fillOneLine(bddArray,i);
         }
     }
 
-    public void fillOneLine(int i){
+    public static void fillOneLine(JSONArray bddArray,int i){
         JSONObject obj = (JSONObject) bddArray.get(i);
         JSONObject fields = (JSONObject) obj.get("fields");
         String art = "not Found";
@@ -60,13 +78,13 @@ public class Table {
         table.add(l);
     }
 
-    public List<TableLine> getTable(){
+    public static List<TableLine> getTable(){
         return table;
     }
     public void setTable(List<TableLine> table) {
         this.table = table;
     }
-    public void affiche(){
+    public static void affiche(){
         for(TableLine l : table){
             System.out.println(l.getArtiste());
             System.out.println(l.getAnnee());
@@ -74,11 +92,28 @@ public class Table {
             System.out.println(l.getVille());
         }
     }
-    public static void main(String[] args) {
-        Table t = new Table();
-        t.affiche();
+
+    public static List<TableLine> getFilterTableLine(TableFilter tableFilter) {
+        List<TableLine> someLine = new ArrayList<TableLine>();
+        String art = tableFilter.getArtiste().toLowerCase();
+        String pays = tableFilter.getPays().toLowerCase();
+        String ville = tableFilter.getVille().toLowerCase();
+        String annee = tableFilter.getAnnee().toLowerCase();
+
+        for (Iterator<TableLine> i = table.iterator(); i.hasNext();) {
+            TableLine tmp = i.next();
+            if (tmp.getArtiste().toLowerCase().contains(art) &&
+                    tmp.getPays().toLowerCase().contains(pays)  &&
+                    tmp.getVille().toLowerCase().contains(ville) &&
+                    tmp.getAnnee().toLowerCase().contains(annee)) {
+                someLine.add(tmp);
+            }
+        }
+        return someLine;
     }
+    public static void main(String[] args) {
 
-
+       affiche();
+    }
 
 }
