@@ -8,15 +8,10 @@ import org.zkoss.json.parser.JSONParser;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class Table {
     private static List<TableLine> table;
-    //private static JSONArray bddArray;
-
-
 
     static {
         String name = "./bdd.json";
@@ -57,10 +52,19 @@ public class Table {
     public static void fillOneLine(JSONArray bddArray,int i){
         JSONObject obj = (JSONObject) bddArray.get(i);
         JSONObject fields = (JSONObject) obj.get("fields");
-        String art = "not Found";
-        String pays = "not Found";
-        String ville = "not Found";
-        String annee = "not Found";
+        String art = "not found in data base";
+        String pays = "not found in data base";
+        String ville = "not found in data base";
+        String annee = "not found in data base";
+
+        String firstDate = "not found in data base";
+        String firstSalle = "not found in data base";
+        String secondDate = "not found in data base";
+        String secondSalle = "not found in data base";
+        String thirdDate = "not found in data base";
+        String thirdSalle = "not found in data base";
+
+        Map<String,String> details = new HashMap<String,String>();
 
         if(fields.containsKey("artistes")){
             art = (String) fields.get("artistes");
@@ -74,7 +78,23 @@ public class Table {
         if(fields.containsKey("annee")){
             annee = (String) fields.get("annee");
         }
-        TableLine l = new TableLine(art,pays,ville,annee);
+
+        if(fields.containsKey("firstDate") &&
+                fields.containsKey("firstSalle")){
+            details.put((String) fields.get("1ere_salle"),(String) fields.get("1ere_date"));
+        }
+
+        if(fields.containsKey("secondDate") &&
+                fields.containsKey("secondSalle")){
+            details.put((String) fields.get("2eme_salle"),(String) fields.get("2eme_date"));
+        }
+
+        if(fields.containsKey("thirdDate") &&
+                fields.containsKey("thirdSalle")){
+            details.put((String) fields.get("3eme_date"),(String) fields.get("3eme_salle"));
+        }
+
+        TableLine l = new TableLine(art,pays,ville,annee,false,details);
         table.add(l);
     }
 
@@ -112,7 +132,6 @@ public class Table {
         return someLine;
     }
     public static void main(String[] args) {
-
        affiche();
     }
 

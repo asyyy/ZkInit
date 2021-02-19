@@ -18,14 +18,9 @@ public class TableViewModel {
 
     private static final String footerMessage = "A Total of %d trucs Items";
     public String title = "Liste des trucs";
-    /*private Table table= new Table();*/
     private TableFilter tableFilter = new TableFilter();
     private List<TableLine> currentTable = Table.getTable();
 
-    /*
-    public TableViewModel(){
-        currentTable = table.getTable();
-    }*/
 
     /**
      * Retourne l'objet servant de filtre pour la vue
@@ -68,7 +63,7 @@ public class TableViewModel {
     }
 
     /**
-     * Affiche un joli tablo
+     * Affiche un joli tablo (débug à la mano)
      */
     public void affiche(){
         for(TableLine l : this.currentTable){
@@ -83,6 +78,6 @@ public class TableViewModel {
     @NotifyChange({"tableModel", "footer"})
     public void changeFilter() {
         currentTable = Table.getFilterTableLine(tableFilter);
-        affiche();
+        //affiche();
     }
 }

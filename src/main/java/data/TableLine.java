@@ -1,17 +1,30 @@
 package data;
 
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 public class TableLine{
 
-    public String artiste;
-    public String pays;
-    public String ville;
-    public String annee;
+    private String artiste;
+    private String pays;
+    private String ville;
+    private String annee;
 
-    public TableLine(String artiste, String pays, String ville, String annee){
+    private boolean detailOpen;
+    private Map<String,String> details = new HashMap<String, String>();
+
+
+    public TableLine(String artiste, String pays, String ville, String annee,
+                     boolean detailOpen, Map<String,String> details){
         this.artiste = artiste;
         this.pays = pays;
         this.ville = ville;
         this.annee = annee;
+        this.detailOpen = false;
+        this.details.put("Bonjour","comissaire");
     }
 
     public String getArtiste() {
@@ -44,4 +57,25 @@ public class TableLine{
     public void setAnnee(String annee) {
         this.annee = annee;
     }
+
+    public boolean isDetailOpen() {
+        return detailOpen;
+    }
+
+    public void setDetailOpen(boolean detailOpen) {
+        this.detailOpen = detailOpen;
+    }
+
+    public Map<String, String> getDetails() {
+        return details;
+    }
+
+    public void setDetails(Map<String, String> details) {
+        this.details = details;
+    }
+    public Set getDetailsEntrySet() {
+        return details.entrySet();
+    }
+
+
 }
