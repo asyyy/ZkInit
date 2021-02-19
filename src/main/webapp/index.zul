@@ -33,14 +33,15 @@
 <!--                            <label value="Test:" />-->
 <!--                            <label value="@load(each.tempDetail)" sclass="heavy" />-->
 <!--                        </div>-->
-                        <listbox model="@load(each.detailsEntrySet)" >
-                            <template name="model" var="item">
-                                <listitem>
-                                    <listcell label="@load(item.key)"></listcell>
-                                    <listcell label="@load(item.value)"></listcell>
-                                </listitem>
+
+                        <div children="@load(each.details)">
+                            <template name="children" var="item">
+                                <label value="@bind(item.key)"/>
+                                <label value="@bind(item.value)"/>
                             </template>
-                        </listbox>
+
+
+                        </div>
                     </hlayout>
                 </detail>
                 <label value="@load(each.artiste)"/>

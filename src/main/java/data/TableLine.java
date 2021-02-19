@@ -1,10 +1,7 @@
 package data;
 
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class TableLine{
 
@@ -16,7 +13,6 @@ public class TableLine{
     private boolean detailOpen;
     private Map<String,String> details = new HashMap<String, String>();
 
-
     public TableLine(String artiste, String pays, String ville, String annee,
                      boolean detailOpen, Map<String,String> details){
         this.artiste = artiste;
@@ -24,7 +20,8 @@ public class TableLine{
         this.ville = ville;
         this.annee = annee;
         this.detailOpen = false;
-        this.details.put("Bonjour","comissaire");
+        this.details.put("Bonjour","Commissaire");
+        this.details.put("chapi","chapo");
     }
 
     public String getArtiste() {
@@ -72,9 +69,6 @@ public class TableLine{
 
     public void setDetails(Map<String, String> details) {
         this.details = details;
-    }
-    public Set getDetailsEntrySet() {
-        return details.entrySet();
     }
 
 
