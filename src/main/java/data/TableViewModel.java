@@ -19,7 +19,7 @@ public class TableViewModel {
     private static final String footerMessage = "A Total of %d trucs Items";
     public String title = "Liste des trucs";
     private TableFilter tableFilter = new TableFilter();
-    private List<TableLine> currentTable = Table.getTable();
+    private List<TableLine2> currentTable = Table2.getTable();
 
 
     /**
@@ -50,7 +50,7 @@ public class TableViewModel {
      * Rend le tablo au Grid
      * @return ListModel
      */
-    public ListModel<TableLine> getTableModel(){
+    public ListModel<TableLine2> getTableModel(){
         return new ListModelList<>(currentTable);
     }
 
@@ -66,18 +66,18 @@ public class TableViewModel {
      * Affiche un joli tablo (débug à la mano)
      */
     public void affiche(){
-        for(TableLine l : this.currentTable){
+        /*for(TableLine l : this.currentTable){
             System.out.println(l.getArtiste());
             System.out.println(l.getAnnee());
             System.out.println(l.getPays());
             System.out.println(l.getVille());
-        }
+        }*/
     }
 
     @Command
     @NotifyChange({"tableModel", "footer"})
     public void changeFilter() {
-        currentTable = Table.getFilterTableLine(tableFilter);
+        currentTable = Table2.getFilterTableLine(tableFilter);
         //affiche();
     }
 }

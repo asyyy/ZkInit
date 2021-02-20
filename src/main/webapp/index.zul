@@ -1,4 +1,5 @@
 <?page title="Auto Generated index.zul" ?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
 <window viewModel="@id('vm') @init('data.TableViewModel')" title="@load(vm.title)" border="normal">
 	<grid model="@load(vm.tableModel)" height="600px">
         <columns menupopup="auto">
@@ -28,19 +29,17 @@
         <template name="model">
             <row>
                 <detail open="${detailOpen}" >
+                    <label value="C'est pas très très joli mais au moins y'a toutes les infos"/>
                     <hlayout>
-<!--                        <div>-->
-<!--                            <label value="Test:" />-->
-<!--                            <label value="@load(each.tempDetail)" sclass="heavy" />-->
-<!--                        </div>-->
-
+                        <button label="Spotify redirect" href="@load(each.spotify)"/>
                         <div children="@load(each.details)">
                             <template name="children" var="item">
-                                <label value="@bind(item.key)"/>
-                                <label value="@bind(item.value)"/>
+
+                                <div forEach="item">
+                                    <label value="@bind(c:cat(item.key,':'))"/>
+                                    <label value="@bind(item.value)"/>
+                                </div>
                             </template>
-
-
                         </div>
                     </hlayout>
                 </detail>

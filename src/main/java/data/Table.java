@@ -48,7 +48,6 @@ public class Table {
             fillOneLine(bddArray,i);
         }
     }
-
     public static void fillOneLine(JSONArray bddArray,int i){
         JSONObject obj = (JSONObject) bddArray.get(i);
         JSONObject fields = (JSONObject) obj.get("fields");
